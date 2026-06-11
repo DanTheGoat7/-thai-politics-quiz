@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ติวประวัติศาสตร์การเมืองไทย</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1f2a5c;
+    --ink-deep:#161e44;
+    --gold:#c8a84e;
+    --gold-soft:#f3ead0;
+    --paper:#eef1f6;
+    --paper-2:#e4e9f2;
+    --white:#ffffff;
+    --text:#1a1f36;
+    --muted:#5a6478;
+    --line:#d8dee9;
+    --ok:#2e7d5b;
+    --ok-soft:#e3f1ea;
+    --bad:#c0392b;
+    --bad-soft:#fbe9e7;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Sarabun',sans-serif;
+    background:var(--paper);
+    color:var(--text);
+    line-height:1.6;
+    font-size:16px;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:780px;margin:0 auto;padding:20px 16px 64px;}
+  h1,h2,h3{font-family:'Kanit',sans-serif;font-weight:600;margin:0;line-height:1.3;color:var(--ink);}
+  .btn{
+    font-family:'Kanit',sans-serif;font-weight:500;font-size:15px;
+    border:none;border-radius:10px;padding:11px 18px;cursor:pointer;
+    background:var(--ink);color:#fff;transition:transform .08s ease,background .15s ease;
+    display:inline-flex;align-items:center;gap:7px;justify-content:center;
+  }
+  .btn:active{transform:scale(.97);}
+  .btn:hover{background:var(--ink-deep);}
+  .btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);}
+  .btn-ghost:hover{background:var(--paper-2);}
+  .btn-gold{background:var(--gold);color:#3a2f08;}
+  .btn-gold:hover{background:#bd9c3f;}
+  .btn-block{width:100%;}
+
+  /* ===== HERO ===== */
+  .hero{
+    background:var(--ink);
+    color:#fff;border-radius:var(--radius);
+    padding:26px 24px;margin-bottom:22px;position:relative;overflow:hidden;
+  }
+  .hero:before{
+    content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;
+    border:2px solid rgba(200,168,78,.25);border-radius:50%;
+  }
+  .hero:after{
+    content:"";position:absolute;right:-10px;bottom:-60px;width:120px;height:120px;
+    border:2px solid rgba(255,255,255,.08);border-radius:50%;
+  }
+  .hero .eyebrow{
+    font-family:'Kanit',sans-serif;font-size:12px;letter-spacing:2px;
+    color:var(--gold);text-transform:uppercase;margin-bottom:8px;
+  }
+  .hero h1{color:#fff;font-size:27px;font-weight:700;margin-bottom:8px;}
+  .hero p{color:rgba(255,255,255,.8);font-size:14.5px;margin:0 0 18px;max-width:90%;}
+  .hero-stats{display:flex;gap:10px;flex-wrap:wrap;}
+  .hstat{
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+    border-radius:10px;padding:9px 14px;flex:1;min-width:92px;
+  }
+  .hstat b{font-family:'Kanit',sans-serif;font-size:19px;color:#fff;display:block;line-height:1.1;}
+  .hstat span{font-size:11.5px;color:rgba(255,255,255,.65);}
+
+  .countdown-tag{
+    display:inline-flex;align-items:center;gap:6px;background:var(--gold-soft);
+    color:#7a611c;font-family:'Kanit',sans-serif;font-weight:500;font-size:13px;
+    padding:6px 12px;border-radius:8px;margin-bottom:16px;
+  }
+
+  /* ===== QUIZ CARDS ===== */
+  .section-label{
+    font-family:'Kanit',sans-serif;font-weight:600;font-size:13px;color:var(--muted);
+    letter-spacing:1px;text-transform:uppercase;margin:4px 2px 12px;
+  }
+  .qcard{
+    background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px 18px;margin-bottom:11px;display:flex;align-items:center;gap:15px;
+    transition:border-color .15s ease,box-shadow .15s ease;
+  }
+  .qcard:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(31,42,92,.07);}
+  .qnum{
+    font-family:'Kanit',sans-serif;font-weight:700;font-size:22px;color:var(--ink);
+    background:var(--paper);border-radius:11px;width:54px;height:54px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;line-height:1;
+  }
+  .qcard.diag .qnum{background:var(--gold-soft);color:#9a7a1d;}
+  .qcard.big .qnum{background:var(--ink);color:var(--gold);}
+  .qbody{flex:1;min-width:0;}
+  .qbody h3{font-size:16.5px;font-weight:600;margin-bottom:2px;color:var(--text);}
+  .qbody .meta{font-size:13px;color:var(--muted);}
+  .qbody .meta .dot{color:var(--line);margin:0 6px;}
+  .qbody .best{font-size:12px;color:var(--ok);font-weight:600;margin-top:3px;}
+  .qcard .go{flex-shrink:0;}
+
+  /* ===== QUIZ RUNNER ===== */
+  .runner-head{
+    position:sticky;top:0;z-index:20;background:var(--paper);
+    padding:14px 0 12px;margin:-20px 0 0;
+  }
+  .rh-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px;}
+  .rh-title{font-family:'Kanit',sans-serif;font-weight:600;font-size:16px;color:var(--ink);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .timer{
+    font-family:'Kanit',sans-serif;font-weight:600;font-size:16px;
+    background:var(--white);border:1.5px solid var(--line);border-radius:9px;
+    padding:6px 13px;flex-shrink:0;display:flex;align-items:center;gap:6px;color:var(--ink);
+  }
+  .timer.warn{background:var(--bad-soft);border-color:#f1b0a8;color:var(--bad);}
+  .progress-track{height:6px;background:var(--paper-2);border-radius:4px;overflow:hidden;}
+  .progress-fill{height:6px;background:var(--gold);border-radius:4px;transition:width .25s ease;}
+
+  .q-counter{font-family:'Kanit',sans-serif;font-size:13px;color:var(--muted);margin:18px 2px 8px;font-weight:500;}
+  .q-text{
+    background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
+    padding:20px 22px;font-size:18px;font-weight:500;color:var(--text);margin-bottom:14px;line-height:1.55;
+  }
+  .opts{display:flex;flex-direction:column;gap:10px;}
+  .opt{
+    background:var(--white);border:1.5px solid var(--line);border-radius:11px;
+    padding:13px 16px;cursor:pointer;font-size:15.5px;color:var(--text);
+    display:flex;align-items:flex-start;gap:12px;transition:border-color .12s,background .12s;
+  }
+  .opt:hover{border-color:var(--ink);}
+  .opt .key{
+    font-family:'Kanit',sans-serif;font-weight:600;font-size:14px;color:var(--ink);
+    background:var(--paper);border-radius:7px;width:28px;height:28px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;line-height:1;margin-top:-1px;
+  }
+  .opt.sel{border-color:var(--ink);background:#f4f6fb;}
+  .opt.sel .key{background:var(--ink);color:#fff;}
+
+  /* answer key states */
+  .opt.correct{border-color:var(--ok);background:var(--ok-soft);}
+  .opt.correct .key{background:var(--ok);color:#fff;}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-soft);}
+  .opt.wrong .key{background:var(--bad);color:#fff;}
+
+  .nav-row{display:flex;gap:10px;margin-top:18px;}
+  .nav-row .btn{flex:1;}
+
+  .qgrid{
+    display:flex;flex-wrap:wrap;gap:7px;margin-top:22px;padding-top:18px;border-top:1px solid var(--line);
+  }
+  .qgrid .gcell{
+    font-family:'Kanit',sans-serif;font-weight:500;font-size:13px;
+    width:34px;height:34px;border-radius:8px;border:1.5px solid var(--line);
+    background:var(--white);color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;
+  }
+  .qgrid .gcell.done{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .qgrid .gcell.here{border-color:var(--gold);border-width:2px;color:var(--ink);}
+
+  .submit-bar{margin-top:20px;}
+
+  /* ===== RESULT ===== */
+  .result-hero{
+    background:var(--ink);color:#fff;border-radius:var(--radius);
+    padding:28px 24px;text-align:center;margin-bottom:20px;
+  }
+  .result-hero .big{font-family:'Kanit',sans-serif;font-weight:700;font-size:46px;line-height:1;color:#fff;}
+  .result-hero .lab{font-family:'Kanit',sans-serif;font-size:16px;color:var(--gold);margin-top:8px;font-weight:500;}
+  .result-stats{display:flex;gap:10px;margin-top:20px;}
+  .rstat{background:rgba(255,255,255,.08);border-radius:10px;padding:11px;flex:1;}
+  .rstat b{font-family:'Kanit',sans-serif;font-size:20px;display:block;color:#fff;}
+  .rstat span{font-size:11.5px;color:rgba(255,255,255,.65);}
+
+  .review-title{font-family:'Kanit',sans-serif;font-weight:600;font-size:16px;color:var(--ink);margin:6px 2px 14px;}
+  .rev-item{
+    background:var(--white);border:1px solid var(--line);border-radius:12px;
+    padding:15px 17px;margin-bottom:11px;
+  }
+  .rev-q{font-size:15px;font-weight:500;color:var(--text);margin-bottom:11px;}
+  .rev-q .qn{color:var(--muted);font-family:'Kanit',sans-serif;margin-right:6px;}
+  .rev-line{display:flex;align-items:flex-start;gap:8px;font-size:14px;margin-bottom:5px;}
+  .rev-line .ic{flex-shrink:0;font-weight:700;width:18px;text-align:center;}
+  .rev-line.you .ic{color:var(--bad);}
+  .rev-line.you.ok .ic{color:var(--ok);}
+  .rev-line.ans .ic{color:var(--ok);}
+  .rev-label{color:var(--muted);margin-right:4px;}
+  .rev-exp{
+    font-size:13.5px;color:var(--muted);background:var(--paper);border-radius:9px;
+    padding:9px 12px;margin-top:9px;border-left:3px solid var(--gold);
+  }
+  .rev-exp b{color:var(--ink);font-weight:600;}
+
+  .foot{text-align:center;color:var(--muted);font-size:12.5px;margin-top:36px;}
+  .hidden{display:none;}
+  @media (max-width:480px){
+    .hero h1{font-size:23px;}
+    .q-text{font-size:16.5px;padding:17px 18px;}
+    .qnum{width:48px;height:48px;font-size:19px;}
+    .result-hero .big{font-size:40px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ HOME ============ -->
+  <div id="home">
+    <div class="hero">
+      <div class="eyebrow">สนามแข่งขัน 19 มิ.ย. 2569</div>
+      <h1>ติวประวัติศาสตร์<br>การเมืองไทย</h1>
+      <p>แบบฝึกหัดปรนัยระดับ ม.ต้น เรียงตามแผน 8 วัน ทำได้ทุกอุปกรณ์ พร้อมจับเวลาและเฉลยละเอียดทุกข้อ</p>
+      <div class="hero-stats">
+        <div class="hstat"><b>8</b><span>ชุดแบบฝึก</span></div>
+        <div class="hstat"><b>200</b><span>ข้อทั้งหมด</span></div>
+        <div class="hstat"><b>ปรนัย</b><span>4 ตัวเลือก</span></div>
+        <div class="hstat"><b>เฉลย</b><span>ทุกข้อ</span></div>
+      </div>
+    </div>
+
+    <div class="section-label">เลือกชุดแบบฝึกหัด</div>
+    <div id="quiz-list"></div>
+
+    <div class="foot">
+      สร้างเพื่อใช้ฝึกซ้อมก่อนการแข่งขัน · ตรวจทานเนื้อหากับหนังสือเรียนอีกครั้งเพื่อความมั่นใจ
+    </div>
+  </div>
+
+  <!-- ============ QUIZ RUNNER ============ -->
+  <div id="runner" class="hidden">
+    <div class="runner-head">
+      <div class="rh-top">
+        <div class="rh-title" id="run-title">—</div>
+        <div class="timer" id="timer"><span id="timer-ico">&#9201;</span><span id="timer-txt">00:00</span></div>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="run-progress" style="width:0%"></div></div>
+    </div>
+
+    <div class="q-counter" id="run-counter">ข้อที่ 1</div>
+    <div class="q-text" id="run-qtext">—</div>
+    <div class="opts" id="run-opts"></div>
+
+    <div class="nav-row">
+      <button class="btn btn-ghost" id="btn-prev" onclick="goPrev()">&#8592; ก่อนหน้า</button>
+      <button class="btn" id="btn-next" onclick="goNext()">ถัดไป &#8594;</button>
+    </div>
+
+    <div class="qgrid" id="run-grid"></div>
+
+    <div class="submit-bar">
+      <button class="btn btn-gold btn-block" onclick="confirmSubmit()">ส่งคำตอบทั้งชุด &amp; ดูเฉลย</button>
+    </div>
+    <div class="foot"><a href="#" onclick="quitToHome(event)" style="color:var(--muted);">ออกจากแบบทดสอบ</a></div>
+  </div>
+
+  <!-- ============ RESULT ============ -->
+  <div id="result" class="hidden">
+    <div class="result-hero">
+      <div class="big" id="res-score">0/0</div>
+      <div class="lab" id="res-label">—</div>
+      <div class="result-stats">
+        <div class="rstat"><b id="res-correct">0</b><span>ตอบถูก</span></div>
+        <div class="rstat"><b id="res-wrong">0</b><span>ตอบผิด</span></div>
+        <div class="rstat"><b id="res-pct">0%</b><span>คะแนนรวม</span></div>
+        <div class="rstat"><b id="res-time">0:00</b><span>เวลาที่ใช้</span></div>
+      </div>
+    </div>
+
+    <div class="nav-row" style="margin-bottom:24px;">
+      <button class="btn btn-ghost" onclick="retryQuiz()">&#8635; ทำชุดนี้ใหม่</button>
+      <button class="btn" onclick="quitToHome()">&#8962; กลับหน้าหลัก</button>
+    </div>
+
+    <div class="review-title">เฉลยและคำอธิบาย</div>
+    <div id="review-list"></div>
+
+    <div class="nav-row" style="margin-top:8px;">
+      <button class="btn btn-block" onclick="quitToHome()">&#8962; กลับหน้าหลัก</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ============================================================
+   QUESTION BANK — ประวัติศาสตร์การเมืองไทย (ม.ต้น)
+   cat: A รากฐาน2475 | B ยุคจอมพล | C 14/6ตุลา | D ครึ่งใบ-2540 | E ยุคใหม่ | F ทั่วไป/รัฐธรรมนูญ
+   ============================================================ */
+var bank = [
+/* ----- A: รากฐานประชาธิปไตย 2475 ----- */
+{cat:'A',q:'การเปลี่ยนแปลงการปกครอง พ.ศ. 2475 เปลี่ยนจากระบอบใดไปสู่ระบอบใด?',o:['สมบูรณาญาสิทธิราชย์ ไปสู่ ประชาธิปไตยอันมีพระมหากษัตริย์ทรงเป็นประมุข','สาธารณรัฐ ไปสู่ ราชาธิปไตย','เผด็จการทหาร ไปสู่ ประชาธิปไตย','ประชาธิปไตย ไปสู่ คอมมิวนิสต์'],a:0,e:'2475 เปลี่ยนจากสมบูรณาญาสิทธิราชย์มาเป็นประชาธิปไตยที่มีพระมหากษัตริย์อยู่ใต้รัฐธรรมนูญ'},
+{cat:'A',q:'คณะบุคคลที่ก่อการเปลี่ยนแปลงการปกครอง พ.ศ. 2475 เรียกว่าอะไร?',o:['คณะราษฎร','คณะปฏิวัติ','คณะรัฐประหาร','คณะกู้ชาติ'],a:0,e:'กลุ่มผู้ก่อการเรียกตนเองว่า "คณะราษฎร"'},
+{cat:'A',q:'การเปลี่ยนแปลงการปกครอง พ.ศ. 2475 ตรงกับวันที่เท่าไร?',o:['24 มิถุนายน 2475','10 ธันวาคม 2475','14 ตุลาคม 2475','1 มกราคม 2475'],a:0,e:'คณะราษฎรยึดอำนาจเช้าวันที่ 24 มิถุนายน 2475'},
+{cat:'A',q:'ใครเป็นหัวหน้าคณะราษฎร (ผู้นำสายทหารในการยึดอำนาจ)?',o:['พระยาพหลพลพยุหเสนา','ปรีดี พนมยงค์','จอมพลสฤษดิ์ ธนะรัชต์','พระยามโนปกรณ์นิติธาดา'],a:0,e:'พระยาพหลพลพยุหเสนาเป็นหัวหน้าคณะราษฎร'},
+{cat:'A',q:'ผู้นำคณะราษฎรสายพลเรือน ผู้ร่างเค้าโครงการเศรษฐกิจ คือใคร?',o:['ปรีดี พนมยงค์','จอมพล ป. พิบูลสงคราม','พระยาทรงสุรเดช','ควง อภัยวงศ์'],a:0,e:'ปรีดี พนมยงค์ เป็นมันสมองสายพลเรือนและร่างเค้าโครงเศรษฐกิจ'},
+{cat:'A',q:'ปรีดี พนมยงค์ มีบรรดาศักดิ์ว่าอะไร?',o:['หลวงประดิษฐ์มนูธรรม','หลวงพิบูลสงคราม','พระยาพหลพลพยุหเสนา','หลวงวิจิตรวาทการ'],a:0,e:'ปรีดี พนมยงค์ มีบรรดาศักดิ์เป็น "หลวงประดิษฐ์มนูธรรม"'},
+{cat:'A',q:'นายกรัฐมนตรีคนแรกของประเทศไทยคือใคร?',o:['พระยามโนปกรณ์นิติธาดา','พระยาพหลพลพยุหเสนา','ปรีดี พนมยงค์','จอมพล ป. พิบูลสงคราม'],a:0,e:'พระยามโนปกรณ์นิติธาดา เป็นนายกรัฐมนตรีคนแรก'},
+{cat:'A',q:'พระมหากษัตริย์ที่ทรงครองราชย์ขณะเกิดการเปลี่ยนแปลงการปกครอง 2475 คือรัชกาลใด?',o:['รัชกาลที่ 7','รัชกาลที่ 6','รัชกาลที่ 8','รัชกาลที่ 5'],a:0,e:'พระบาทสมเด็จพระปกเกล้าเจ้าอยู่หัว (ร.7) ทรงครองราชย์ในขณะนั้น'},
+{cat:'A',q:'รัฐธรรมนูญถาวรฉบับแรกประกาศใช้ในวันใด ซึ่งถือเป็น "วันรัฐธรรมนูญ"?',o:['10 ธันวาคม 2475','24 มิถุนายน 2475','27 มิถุนายน 2475','5 ธันวาคม 2475'],a:0,e:'รัฐธรรมนูญถาวรฉบับแรกประกาศใช้ 10 ธันวาคม 2475'},
+{cat:'A',q:'"วันรัฐธรรมนูญ" ตรงกับวันที่เท่าไรของทุกปี?',o:['10 ธันวาคม','24 มิถุนายน','5 ธันวาคม','1 มกราคม'],a:0,e:'วันรัฐธรรมนูญคือ 10 ธันวาคม'},
+{cat:'A',q:'เอกสารแสดงแนวคิดเศรษฐกิจของปรีดี ที่กลายเป็นชนวนความขัดแย้ง เรียกว่าอะไร?',o:['เค้าโครงการเศรษฐกิจ (สมุดปกเหลือง)','ประกาศคณะราษฎร','พระราชบัญญัติเศรษฐกิจ','แผนพัฒนาเศรษฐกิจฉบับที่ 1'],a:0,e:'เค้าโครงการเศรษฐกิจ หรือ "สมุดปกเหลือง" ของปรีดี ก่อให้เกิดความขัดแย้ง'},
+{cat:'A',q:'หลัก 6 ประการของคณะราษฎร ข้อแรกว่าด้วยเรื่องใด?',o:['เอกราช','การศึกษา','เศรษฐกิจ','เสรีภาพ'],a:0,e:'หลัก 6 ประการเริ่มด้วย "เอกราช" และจบที่ "การศึกษา"'},
+{cat:'A',q:'กบฏที่พยายามล้มล้างรัฐบาลคณะราษฎรในปี 2476 นำโดยพระองค์เจ้าบวรเดช เรียกว่าอะไร?',o:['กบฏบวรเดช','กบฏแมนฮัตตัน','กบฏเมษาฮาวาย','กบฏ ร.ศ. 130'],a:0,e:'กบฏบวรเดช พ.ศ. 2476 เป็นการต่อต้านรัฐบาลคณะราษฎรจากฝ่ายนิยมเจ้า'},
+{cat:'A',q:'พระบาทสมเด็จพระปกเกล้าเจ้าอยู่หัว (ร.7) ทรงสละราชสมบัติในปีใด?',o:['พ.ศ. 2477','พ.ศ. 2475','พ.ศ. 2480','พ.ศ. 2489'],a:0,e:'ร.7 ทรงสละราชสมบัติเมื่อ พ.ศ. 2477'},
+{cat:'A',q:'หลังร.7 สละราชสมบัติ ผู้ที่ขึ้นครองราชย์เป็นรัชกาลที่ 8 คือใคร?',o:['พระบาทสมเด็จพระปรเมนทรมหาอานันทมหิดล','พระบาทสมเด็จพระมงกุฎเกล้าเจ้าอยู่หัว','พระบาทสมเด็จพระปรมินทรมหาภูมิพลอดุลยเดช','สมเด็จพระเจ้าตากสินมหาราช'],a:0,e:'พระบาทสมเด็จพระปรเมนทรมหาอานันทมหิดล (ร.8) ขึ้นครองราชย์ต่อ'},
+{cat:'A',q:'คณะราษฎรประกาศอุดมการณ์ของตนไว้ทั้งหมดกี่ประการ?',o:['6 ประการ','3 ประการ','5 ประการ','12 ประการ'],a:0,e:'หลักของคณะราษฎรมี 6 ประการ'},
+{cat:'A',q:'ผู้ที่อ่านประกาศคณะราษฎรฉบับที่ 1 ในเช้าวันที่ 24 มิถุนายน 2475 คือใคร?',o:['พระยาพหลพลพยุหเสนา','ปรีดี พนมยงค์','พระยาทรงสุรเดช','หลวงวิจิตรวาทการ'],a:0,e:'พระยาพหลพลพยุหเสนา หัวหน้าคณะราษฎร เป็นผู้อ่านประกาศฉบับที่ 1'},
+{cat:'A',q:'รัฐธรรมนูญฉบับชั่วคราวฉบับแรก (27 มิ.ย. 2475) มีชื่อเรียกว่าอะไร?',o:['พระราชบัญญัติธรรมนูญการปกครองแผ่นดินสยามชั่วคราว','รัฐธรรมนูญแห่งราชอาณาจักรไทย','ธรรมนูญการปกครองราชอาณาจักร','กฎหมายลักษณะอาญา'],a:0,e:'ฉบับชั่วคราวฉบับแรกคือ พ.ร.บ.ธรรมนูญการปกครองแผ่นดินสยามชั่วคราว 27 มิ.ย. 2475'},
+{cat:'A',q:'หลัก 6 ประการของคณะราษฎร ข้อสุดท้ายว่าด้วยเรื่องใด?',o:['การศึกษา','เอกราช','เสมอภาค','เศรษฐกิจ'],a:0,e:'หลัก 6 ประการข้อสุดท้ายคือ "การศึกษา"'},
+
+/* ----- B: ยุคจอมพล / เผด็จการทหาร ----- */
+{cat:'B',q:'จอมพล ป. พิบูลสงคราม มีชื่อเดิมว่าอะไร?',o:['แปลก ขีตตะสังคะ','เปลื้อง ธนะรัชต์','ถนอม กิตติขจร','สฤษดิ์ ธนะรัชต์'],a:0,e:'จอมพล ป. มีชื่อเดิมว่า "แปลก ขีตตะสังคะ"'},
+{cat:'B',q:'จอมพล ป. พิบูลสงคราม เปลี่ยนชื่อประเทศจาก "สยาม" เป็น "ไทย" ในปีใด?',o:['พ.ศ. 2482','พ.ศ. 2475','พ.ศ. 2500','พ.ศ. 2495'],a:0,e:'เปลี่ยนชื่อประเทศเป็น "ไทย" เมื่อ พ.ศ. 2482'},
+{cat:'B',q:'นโยบายสร้างชาติของจอมพล ป. ที่กำหนดวัฒนธรรม การแต่งกาย และการใช้ภาษา เรียกว่าอะไร?',o:['รัฐนิยม','ประชานิยม','ชาตินิยมใหม่','รัฐสวัสดิการ'],a:0,e:'นโยบาย "รัฐนิยม" กำหนดแนวปฏิบัติทางวัฒนธรรมของชาติ'},
+{cat:'B',q:'ขบวนการเสรีไทยในสงครามโลกครั้งที่ 2 มีจุดมุ่งหมายเพื่ออะไร?',o:['ต่อต้านญี่ปุ่นและกอบกู้เอกราชของชาติ','สนับสนุนญี่ปุ่นเข้ายึดครองไทย','ล้มล้างสถาบันพระมหากษัตริย์','เรียกร้องรัฐธรรมนูญฉบับใหม่'],a:0,e:'ขบวนการเสรีไทยตั้งขึ้นเพื่อต่อต้านญี่ปุ่นและรักษาเอกราชของไทย'},
+{cat:'B',q:'จอมพลสฤษดิ์ ธนะรัชต์ ทำการยึดอำนาจครั้งสำคัญในปีใด?',o:['พ.ศ. 2500','พ.ศ. 2475','พ.ศ. 2516','พ.ศ. 2535'],a:0,e:'จอมพลสฤษดิ์ยึดอำนาจในปี พ.ศ. 2500 (และจัดระเบียบอำนาจต่อในปี 2501)'},
+{cat:'B',q:'มาตราใดในธรรมนูญการปกครองที่ให้อำนาจเบ็ดเสร็จแก่จอมพลสฤษดิ์?',o:['มาตรา 17','มาตรา 44','มาตรา 7','มาตรา 112'],a:0,e:'"มาตรา 17" ให้อำนาจเด็ดขาดแก่นายกรัฐมนตรีในยุคสฤษดิ์'},
+{cat:'B',q:'ใครดำรงตำแหน่งนายกรัฐมนตรีต่อจากจอมพลสฤษดิ์ หลังสฤษดิ์ถึงแก่อสัญกรรมในปี 2506?',o:['จอมพลถนอม กิตติขจร','จอมพล ป. พิบูลสงคราม','พลเอกเปรม ติณสูลานนท์','สัญญา ธรรมศักดิ์'],a:0,e:'จอมพลถนอม กิตติขจร สืบทอดอำนาจต่อจากสฤษดิ์'},
+{cat:'B',q:'ในสมัยจอมพล ป. รัฐบาลประกาศเข้าร่วมสงครามโลกครั้งที่ 2 โดยเป็นพันธมิตรกับฝ่ายใด?',o:['ฝ่ายอักษะ (ญี่ปุ่น)','ฝ่ายสัมพันธมิตร (อังกฤษ-อเมริกา)','เป็นกลางตลอดสงคราม','ฝ่ายโซเวียต'],a:0,e:'รัฐบาลจอมพล ป. ประกาศเป็นพันธมิตรกับญี่ปุ่นในช่วงสงครามโลกครั้งที่ 2'},
+{cat:'B',q:'ยุคของจอมพลสฤษดิ์และจอมพลถนอม มักถูกเรียกว่ายุคใด?',o:['ยุคเผด็จการทหาร','ยุคประชาธิปไตยเต็มใบ','ยุคฟื้นฟูประชาธิปไตย','ยุครัฐสวัสดิการ'],a:0,e:'ช่วงสฤษดิ์–ถนอม ถือเป็นยุคเผด็จการทหารที่ยาวนาน'},
+{cat:'B',q:'จอมพลสฤษดิ์ใช้แนวทางพัฒนาประเทศโดยเน้นเรื่องใดเป็นคำขวัญ?',o:['การพัฒนา (น้ำไหล ไฟสว่าง ทางดี)','การปฏิรูปที่ดิน','การกระจายอำนาจ','รัฐสวัสดิการถ้วนหน้า'],a:0,e:'สฤษดิ์ชูแนวคิด "การพัฒนา" เน้นสาธารณูปโภคพื้นฐาน'},
+{cat:'B',q:'ในสมัยจอมพล ป. มีการเปลี่ยนวันขึ้นปีใหม่ของไทยมาเป็นวันที่เท่าไร?',o:['1 มกราคม','1 เมษายน','13 เมษายน','24 มิถุนายน'],a:0,e:'เปลี่ยนวันขึ้นปีใหม่มาเป็น 1 มกราคม ในสมัยจอมพล ป.'},
+{cat:'B',q:'จอมพล ป. พิบูลสงคราม พ้นจากอำนาจครั้งสุดท้ายเพราะเหตุใด?',o:['ถูกจอมพลสฤษดิ์ทำรัฐประหารในปี 2500','ลาออกเพราะปัญหาสุขภาพ','แพ้การเลือกตั้งทั่วไป','ถูกถอดถอนโดยรัฐสภา'],a:0,e:'จอมพล ป. ถูกจอมพลสฤษดิ์รัฐประหารในปี 2500'},
+{cat:'B',q:'ผู้สำเร็จราชการแทนพระองค์ผู้เป็นหัวหน้าขบวนการเสรีไทยภายในประเทศ คือใคร?',o:['ปรีดี พนมยงค์','จอมพล ป. พิบูลสงคราม','พระยาพหลพลพยุหเสนา','ม.ร.ว.เสนีย์ ปราโมช'],a:0,e:'ปรีดี พนมยงค์ ดำรงตำแหน่งผู้สำเร็จราชการฯ และเป็นหัวหน้าขบวนการเสรีไทยในประเทศ'},
+
+/* ----- C: 14 ตุลา 2516 & 6 ตุลา 2519 ----- */
+{cat:'C',q:'เหตุการณ์ 14 ตุลาคม 2516 เกิดขึ้นในสมัยรัฐบาลของใคร?',o:['จอมพลถนอม กิตติขจร','จอมพลสฤษดิ์ ธนะรัชต์','พลเอกเปรม ติณสูลานนท์','ม.ร.ว.เสนีย์ ปราโมช'],a:0,e:'14 ตุลา 2516 เกิดในสมัยรัฐบาลจอมพลถนอม กิตติขจร'},
+{cat:'C',q:'เหตุการณ์ 14 ตุลาคม 2516 มีศูนย์กลางการชุมนุมอยู่บริเวณใด?',o:['มหาวิทยาลัยธรรมศาสตร์และอนุสาวรีย์ประชาธิปไตย','สนามหลวงและวัดพระแก้ว','ทำเนียบรัฐบาลและรัฐสภา','ลานพระบรมรูปทรงม้า'],a:0,e:'การชุมนุมมีศูนย์กลางที่ ม.ธรรมศาสตร์ และเคลื่อนสู่อนุสาวรีย์ประชาธิปไตย'},
+{cat:'C',q:'ผู้นำเผด็จการ 3 คนที่ถูกประชาชนขับไล่ในเหตุการณ์ 14 ตุลา 2516 ถูกเรียกรวมว่าอะไร?',o:['สามทรราช','สามเกลอ','สามจอมพล','สามผู้ยิ่งใหญ่'],a:0,e:'ผู้นำ 3 คนถูกเรียกว่า "สามทรราช"'},
+{cat:'C',q:'"สามทรราช" ในเหตุการณ์ 14 ตุลา 2516 ประกอบด้วยใครบ้าง?',o:['ถนอม ประภาส ณรงค์','สฤษดิ์ ถนอม เปรม','ป. ถนอม สฤษดิ์','ถนอม จำลอง สุจินดา'],a:0,e:'สามทรราช คือ จอมพลถนอม, จอมพลประภาส และพันเอกณรงค์'},
+{cat:'C',q:'เหตุการณ์ 14 ตุลาคม 2516 ถูกเรียกอีกชื่อหนึ่งว่าอะไร?',o:['วันมหาวิปโยค','วันมหาประชาชน','วันเสรีภาพ','วันประชาธิปไตย'],a:0,e:'14 ตุลา 2516 มีอีกชื่อว่า "วันมหาวิปโยค"'},
+{cat:'C',q:'ข้อเรียกร้องหลักของนักศึกษาและประชาชนในเหตุการณ์ 14 ตุลา 2516 คืออะไร?',o:['เรียกร้องรัฐธรรมนูญ','เรียกร้องขึ้นค่าแรง','ต่อต้านสงครามเวียดนาม','เรียกร้องเอกราช'],a:0,e:'ผู้ชุมนุมเรียกร้องรัฐธรรมนูญและการคืนสู่ประชาธิปไตย'},
+{cat:'C',q:'เหตุการณ์ 6 ตุลาคม 2519 เกิดความรุนแรงขึ้นที่มหาวิทยาลัยใด?',o:['มหาวิทยาลัยธรรมศาสตร์','จุฬาลงกรณ์มหาวิทยาลัย','มหาวิทยาลัยรามคำแหง','มหาวิทยาลัยเกษตรศาสตร์'],a:0,e:'เหตุการณ์ 6 ตุลา 2519 เกิดที่มหาวิทยาลัยธรรมศาสตร์'},
+{cat:'C',q:'ชนวนเหตุส่วนหนึ่งของเหตุการณ์ 6 ตุลา 2519 มาจากการเดินทางกลับประเทศของใคร?',o:['จอมพลถนอม กิตติขจร','จอมพล ป. พิบูลสงคราม','ปรีดี พนมยงค์','พลเอกสุจินดา คราประยูร'],a:0,e:'การกลับประเทศของจอมพลถนอมเป็นชนวนความตึงเครียดก่อน 6 ตุลา 2519'},
+{cat:'C',q:'หลังเหตุการณ์ 6 ตุลา 2519 ใครขึ้นเป็นนายกรัฐมนตรีจากการรัฐประหาร?',o:['ธานินทร์ กรัยวิเชียร','พลเอกเปรม ติณสูลานนท์','เกรียงศักดิ์ ชมะนันทน์','สัญญา ธรรมศักดิ์'],a:0,e:'หลังรัฐประหาร 6 ตุลา 2519 ธานินทร์ กรัยวิเชียร ได้เป็นนายกรัฐมนตรี'},
+{cat:'C',q:'รัฐบาลพลเรือนก่อนเหตุการณ์ 6 ตุลา 2519 (รัฐบาลที่ถูกรัฐประหาร) มีนายกฯ คือใคร?',o:['ม.ร.ว.เสนีย์ ปราโมช','ม.ร.ว.คึกฤทธิ์ ปราโมช','สัญญา ธรรมศักดิ์','ธานินทร์ กรัยวิเชียร'],a:0,e:'รัฐบาลก่อน 6 ตุลา 2519 มี ม.ร.ว.เสนีย์ ปราโมช เป็นนายกรัฐมนตรี'},
+{cat:'C',q:'หลังเหตุการณ์ 14 ตุลา 2516 พระมหากษัตริย์ทรงแต่งตั้งใครเป็นนายกรัฐมนตรีพระราชทาน?',o:['สัญญา ธรรมศักดิ์','ธานินทร์ กรัยวิเชียร','เกรียงศักดิ์ ชมะนันทน์','พลเอกเปรม ติณสูลานนท์'],a:0,e:'หลัง 14 ตุลา 2516 สัญญา ธรรมศักดิ์ ได้รับแต่งตั้งเป็นนายกรัฐมนตรี'},
+{cat:'C',q:'ช่วงประชาธิปไตยเบ่งบานระหว่างเหตุการณ์ 14 ตุลา 2516 ถึง 6 ตุลา 2519 กินเวลาประมาณกี่ปี?',o:['ประมาณ 3 ปี','ประมาณ 1 ปี','ประมาณ 7 ปี','ประมาณ 10 ปี'],a:0,e:'ช่วงประชาธิปไตยเบ่งบานกินเวลาราว 3 ปี (2516–2519)'},
+{cat:'C',q:'เหตุการณ์การล้อมปราบนักศึกษาที่มหาวิทยาลัยธรรมศาสตร์ตรงกับวันที่เท่าไร?',o:['6 ตุลาคม 2519','14 ตุลาคม 2516','17 พฤษภาคม 2535','24 มิถุนายน 2475'],a:0,e:'เหตุการณ์ล้อมปราบที่ธรรมศาสตร์คือ 6 ตุลาคม 2519'},
+
+/* ----- D: ประชาธิปไตยครึ่งใบ – พฤษภา 2535 – รธน 2540 ----- */
+{cat:'D',q:'พลเอกเปรม ติณสูลานนท์ ดำรงตำแหน่งนายกรัฐมนตรีในช่วงปีใด?',o:['พ.ศ. 2523–2531','พ.ศ. 2516–2519','พ.ศ. 2535–2538','พ.ศ. 2544–2549'],a:0,e:'พลเอกเปรมเป็นนายกรัฐมนตรีช่วง พ.ศ. 2523–2531'},
+{cat:'D',q:'ยุคของพลเอกเปรมที่นายกฯ ไม่ได้มาจากการเลือกตั้งแต่มีรัฐสภา มักถูกเรียกว่าอะไร?',o:['ประชาธิปไตยครึ่งใบ','ประชาธิปไตยเต็มใบ','เผด็จการเบ็ดเสร็จ','รัฐบาลเฉพาะกาล'],a:0,e:'ยุคเปรมถูกเรียกว่า "ประชาธิปไตยครึ่งใบ"'},
+{cat:'D',q:'เหตุการณ์พฤษภาทมิฬเกิดขึ้นในปีใด?',o:['พ.ศ. 2535','พ.ศ. 2519','พ.ศ. 2540','พ.ศ. 2549'],a:0,e:'พฤษภาทมิฬเกิดขึ้นในเดือนพฤษภาคม พ.ศ. 2535'},
+{cat:'D',q:'ประชาชนในเหตุการณ์พฤษภาทมิฬ 2535 ออกมาต่อต้านใครที่ขึ้นเป็นนายกรัฐมนตรี?',o:['พลเอกสุจินดา คราประยูร','พลเอกชวลิต ยงใจยุทธ','พลเอกเปรม ติณสูลานนท์','พลเอกเกรียงศักดิ์ ชมะนันทน์'],a:0,e:'ประชาชนต่อต้านพลเอกสุจินดา คราประยูร ที่ขึ้นเป็นนายกฯ ทั้งที่ไม่ได้ลงเลือกตั้ง'},
+{cat:'D',q:'ผู้นำการชุมนุมคนสำคัญในเหตุการณ์พฤษภาทมิฬ 2535 คือใคร?',o:['พลตรีจำลอง ศรีเมือง','พลเอกชาติชาย ชุณหะวัณ','ทักษิณ ชินวัตร','อภิสิทธิ์ เวชชาชีวะ'],a:0,e:'พลตรีจำลอง ศรีเมือง เป็นผู้นำการชุมนุมคนสำคัญในพฤษภาทมิฬ'},
+{cat:'D',q:'คณะที่ทำรัฐประหารในปี 2534 (ก่อนพฤษภาทมิฬ) ใช้ชื่อว่าอะไร?',o:['รสช. (คณะรักษาความสงบเรียบร้อยแห่งชาติ)','คสช.','คมช.','คปค.'],a:0,e:'คณะรัฐประหารปี 2534 คือ รสช. (คณะรักษาความสงบเรียบร้อยแห่งชาติ)'},
+{cat:'D',q:'รัฐธรรมนูญฉบับปี 2540 ได้รับการยกย่องว่าเป็นรัฐธรรมนูญแบบใด?',o:['ฉบับประชาชน','ฉบับชั่วคราว','ฉบับเผด็จการ','ฉบับพระราชทาน'],a:0,e:'รัฐธรรมนูญ 2540 ถูกยกย่องว่าเป็น "ฉบับประชาชน" เพราะประชาชนมีส่วนร่วมในการร่าง'},
+{cat:'D',q:'รัฐธรรมนูญ 2540 ริเริ่มให้มีองค์กรอิสระใดเพื่อดูแลและจัดการเลือกตั้ง?',o:['คณะกรรมการการเลือกตั้ง (กกต.)','สภาความมั่นคงแห่งชาติ','คณะกรรมการสิทธิมนุษยชน','สำนักงานตำรวจแห่งชาติ'],a:0,e:'รัฐธรรมนูญ 2540 ตั้งคณะกรรมการการเลือกตั้ง (กกต.) เป็นองค์กรอิสระ'},
+{cat:'D',q:'นายกรัฐมนตรีในช่วงวิกฤตเศรษฐกิจต้มยำกุ้ง 2540 (ตอนประกาศลอยตัวค่าเงินบาท) คือใคร?',o:['พลเอกชวลิต ยงใจยุทธ','ชวน หลีกภัย','บรรหาร ศิลปอาชา','ทักษิณ ชินวัตร'],a:0,e:'พลเอกชวลิต ยงใจยุทธ เป็นนายกฯ ขณะลอยตัวค่าเงินบาทในปี 2540'},
+{cat:'D',q:'วิกฤตเศรษฐกิจปี 2540 ที่เริ่มจากการลอยตัวค่าเงินบาท มักเรียกว่าวิกฤตอะไร?',o:['วิกฤตต้มยำกุ้ง','วิกฤตแฮมเบอร์เกอร์','วิกฤตน้ำมัน','วิกฤตซับไพรม์'],a:0,e:'วิกฤตปี 2540 เรียกว่า "วิกฤตต้มยำกุ้ง"'},
+{cat:'D',q:'ก่อนพฤษภาทมิฬ 2535 พลเอกสุจินดาเคยกล่าววาทะใดที่ทำให้ประชาชนไม่พอใจ?',o:['"เสียสัตย์เพื่อชาติ"','"เราจะทำตามสัญญา"','"ขอเวลาอีกไม่นาน"','"บ้านเมืองต้องสงบ"'],a:0,e:'พลเอกสุจินดาใช้วาทะ "เสียสัตย์เพื่อชาติ" หลังรับตำแหน่งนายกฯ ทั้งที่เคยลั่นวาจาว่าจะไม่รับ'},
+{cat:'D',q:'หลังเหตุการณ์พฤษภาทมิฬ 2535 ใครได้รับแต่งตั้งเป็นนายกรัฐมนตรีเพื่อคลี่คลายสถานการณ์?',o:['อานันท์ ปันยารชุน','ชวน หลีกภัย','บรรหาร ศิลปอาชา','ชวลิต ยงใจยุทธ'],a:0,e:'หลังพฤษภาทมิฬ อานันท์ ปันยารชุน กลับมาเป็นนายกฯ เพื่อจัดการเลือกตั้งใหม่'},
+{cat:'D',q:'นายกรัฐมนตรีจากพรรคประชาธิปัตย์ที่ดำรงตำแหน่งช่วงหลังวิกฤตเศรษฐกิจ 2540 คือใคร?',o:['ชวน หลีกภัย','บรรหาร ศิลปอาชา','สมัคร สุนทรเวช','อภิสิทธิ์ เวชชาชีวะ'],a:0,e:'ชวน หลีกภัย (ประชาธิปัตย์) เป็นนายกฯ ช่วงฟื้นฟูหลังวิกฤต 2540'},
+
+/* ----- E: การเมืองไทยยุคใหม่ (ทักษิณ – ปัจจุบัน) ----- */
+{cat:'E',q:'ทักษิณ ชินวัตร เป็นหัวหน้าพรรคใดที่ชนะการเลือกตั้งในปี 2544?',o:['พรรคไทยรักไทย','พรรคเพื่อไทย','พรรคพลังประชาชน','พรรคประชาธิปัตย์'],a:0,e:'ทักษิณนำพรรคไทยรักไทยชนะเลือกตั้งปี 2544'},
+{cat:'E',q:'การรัฐประหาร 19 กันยายน 2549 เป็นการยึดอำนาจรัฐบาลของใคร?',o:['ทักษิณ ชินวัตร','ยิ่งลักษณ์ ชินวัตร','สมัคร สุนทรเวช','อภิสิทธิ์ เวชชาชีวะ'],a:0,e:'รัฐประหาร 19 ก.ย. 2549 ยึดอำนาจจากรัฐบาลทักษิณ ชินวัตร'},
+{cat:'E',q:'นายกรัฐมนตรีหญิงคนแรกของประเทศไทยคือใคร?',o:['ยิ่งลักษณ์ ชินวัตร','แพทองธาร ชินวัตร','คุณหญิงพจมาน ดามาพงศ์','สุดารัตน์ เกยุราพันธุ์'],a:0,e:'ยิ่งลักษณ์ ชินวัตร เป็นนายกรัฐมนตรีหญิงคนแรกของไทย'},
+{cat:'E',q:'ยิ่งลักษณ์ ชินวัตร ดำรงตำแหน่งนายกรัฐมนตรีในนามพรรคใด?',o:['พรรคเพื่อไทย','พรรคไทยรักไทย','พรรคพลังประชาชน','พรรคอนาคตใหม่'],a:0,e:'ยิ่งลักษณ์เป็นนายกฯ ในนามพรรคเพื่อไทย'},
+{cat:'E',q:'การรัฐประหาร 22 พฤษภาคม 2557 นำโดยใคร?',o:['พลเอกประยุทธ์ จันทร์โอชา','พลเอกสนธิ บุญยรัตกลิน','พลเอกอนุพงษ์ เผ่าจินดา','พลเอกประวิตร วงษ์สุวรรณ'],a:0,e:'พลเอกประยุทธ์ จันทร์โอชา เป็นผู้นำการรัฐประหาร 22 พ.ค. 2557'},
+{cat:'E',q:'คณะรัฐประหารปี 2557 ใช้ชื่อย่อว่าอะไร?',o:['คสช.','คปค.','รสช.','คมช.'],a:0,e:'คณะรัฐประหารปี 2557 คือ คสช.'},
+{cat:'E',q:'"คสช." ย่อมาจากอะไร?',o:['คณะรักษาความสงบแห่งชาติ','คณะรักษาความมั่นคงแห่งชาติ','คณะรัฐประหารแห่งชาติ','คณะรักษาความสงบเรียบร้อยแห่งชาติ'],a:0,e:'คสช. ย่อมาจาก "คณะรักษาความสงบแห่งชาติ"'},
+{cat:'E',q:'รัฐธรรมนูญฉบับที่ใช้อยู่ในปัจจุบันของไทยประกาศใช้ในปีใด?',o:['พ.ศ. 2560','พ.ศ. 2550','พ.ศ. 2540','พ.ศ. 2557'],a:0,e:'รัฐธรรมนูญฉบับปัจจุบันประกาศใช้ พ.ศ. 2560'},
+{cat:'E',q:'กลุ่มผู้ชุมนุมที่สนับสนุนทักษิณ ชินวัตร มักสวมเสื้อสีใด?',o:['เสื้อแดง','เสื้อเหลือง','เสื้อเขียว','เสื้อฟ้า'],a:0,e:'กลุ่มสนับสนุนทักษิณ (นปช.) สวมเสื้อแดง'},
+{cat:'E',q:'กลุ่มผู้ชุมนุมต่อต้านทักษิณช่วงปี 2548–2549 สวมเสื้อสีใด?',o:['เสื้อเหลือง','เสื้อแดง','เสื้อขาว','เสื้อดำ'],a:0,e:'กลุ่มพันธมิตรประชาชนเพื่อประชาธิปไตย (พธม.) สวมเสื้อเหลือง'},
+{cat:'E',q:'หลังการเลือกตั้งปี 2566 ใครได้เป็นนายกรัฐมนตรีคนที่ 30 ของไทย?',o:['เศรษฐา ทวีสิน','พิธา ลิ้มเจริญรัตน์','ประยุทธ์ จันทร์โอชา','อนุทิน ชาญวีรกูล'],a:0,e:'เศรษฐา ทวีสิน เป็นนายกรัฐมนตรีคนที่ 30 หลังการเลือกตั้งปี 2566'},
+{cat:'E',q:'นายกรัฐมนตรีคนที่ 31 ของไทย ซึ่งเป็นบุตรสาวของทักษิณ ชินวัตร คือใคร?',o:['แพทองธาร ชินวัตร','ยิ่งลักษณ์ ชินวัตร','พินทองทา ชินวัตร','สุดารัตน์ เกยุราพันธุ์'],a:0,e:'แพทองธาร ชินวัตร บุตรสาวของทักษิณ เป็นนายกรัฐมนตรีคนที่ 31'},
+{cat:'E',q:'นายกรัฐมนตรีคนปัจจุบัน (คนที่ 32) ของไทยคือใคร?',o:['อนุทิน ชาญวีรกูล','ประยุทธ์ จันทร์โอชา','เศรษฐา ทวีสิน','แพทองธาร ชินวัตร'],a:0,e:'อนุทิน ชาญวีรกูล (พรรคภูมิใจไทย) ได้รับเลือกเป็นนายกรัฐมนตรีคนที่ 32 เมื่อ 19 มี.ค. 2569'},
+{cat:'E',q:'จนถึงปัจจุบัน ประเทศไทยมีนายกรัฐมนตรีมาแล้วทั้งหมดกี่คน?',o:['32 คน','29 คน','25 คน','40 คน'],a:0,e:'ประเทศไทยมีนายกรัฐมนตรีมาแล้ว 32 คน (นับถึงอนุทิน ชาญวีรกูล)'},
+{cat:'E',q:'พรรคที่ได้คะแนนเสียงมาเป็นอันดับหนึ่งในการเลือกตั้งทั่วไปปี 2566 คือพรรคใด?',o:['พรรคก้าวไกล','พรรคเพื่อไทย','พรรคพลังประชารัฐ','พรรครวมไทยสร้างชาติ'],a:0,e:'พรรคก้าวไกลได้ที่นั่งมากเป็นอันดับหนึ่งในการเลือกตั้งปี 2566'},
+{cat:'E',q:'หัวหน้าพรรคก้าวไกลที่เป็นแคนดิเดตนายกรัฐมนตรีในการเลือกตั้งปี 2566 คือใคร?',o:['พิธา ลิ้มเจริญรัตน์','ธนาธร จึงรุ่งเรืองกิจ','ชัยธวัช ตุลาธน','ปิยบุตร แสงกนกกุล'],a:0,e:'พิธา ลิ้มเจริญรัตน์ เป็นหัวหน้าพรรคและแคนดิเดตนายกฯ ของก้าวไกลในปี 2566'},
+{cat:'E',q:'คณะที่ทำรัฐประหารในปี 2549 ใช้ชื่อย่อในช่วงแรกว่าอะไร?',o:['คปค. (คณะปฏิรูปการปกครองฯ)','คสช.','รสช.','กปปส.'],a:0,e:'คณะรัฐประหารปี 2549 ใช้ชื่อ คปค. (ภายหลังเปลี่ยนเป็น คมช.)'},
+{cat:'E',q:'การรัฐประหารสองครั้งล่าสุดในประวัติศาสตร์การเมืองไทยเกิดขึ้นในปีใดบ้าง?',o:['พ.ศ. 2549 และ 2557','พ.ศ. 2519 และ 2535','พ.ศ. 2535 และ 2549','พ.ศ. 2500 และ 2516'],a:0,e:'รัฐประหารสองครั้งล่าสุดคือ พ.ศ. 2549 และ พ.ศ. 2557'},
+
+/* ----- F: ความรู้ทั่วไป / รัฐธรรมนูญ / สถาบันการเมือง ----- */
+{cat:'F',q:'รัฐสภาไทยในปัจจุบันประกอบด้วยกี่สภา?',o:['2 สภา','1 สภา','3 สภา','4 สภา'],a:0,e:'รัฐสภาไทยเป็นระบบ 2 สภา คือ สภาผู้แทนราษฎรและวุฒิสภา'},
+{cat:'F',q:'สมาชิกสภาผู้แทนราษฎรเรียกย่อว่าอะไร?',o:['ส.ส.','ส.ว.','ส.ก.','ส.จ.'],a:0,e:'สมาชิกสภาผู้แทนราษฎร เรียกย่อว่า "ส.ส."'},
+{cat:'F',q:'สมาชิกวุฒิสภาเรียกย่อว่าอะไร?',o:['ส.ว.','ส.ส.','ส.ป.','ส.ข.'],a:0,e:'สมาชิกวุฒิสภา เรียกย่อว่า "ส.ว."'},
+{cat:'F',q:'ระบอบการปกครองของไทยในปัจจุบันคือระบอบใด?',o:['ประชาธิปไตยอันมีพระมหากษัตริย์ทรงเป็นประมุข','สาธารณรัฐประชาธิปไตย','ราชาธิปไตยภายใต้รัฐธรรมนูญแบบสมบูรณ์','สังคมนิยมประชาธิปไตย'],a:0,e:'ไทยปกครองด้วยระบอบประชาธิปไตยอันมีพระมหากษัตริย์ทรงเป็นประมุข'},
+{cat:'F',q:'ก่อนการเปลี่ยนแปลงการปกครอง 2475 ไทยปกครองด้วยระบอบใด?',o:['สมบูรณาญาสิทธิราชย์','ประชาธิปไตย','สาธารณรัฐ','คอมมิวนิสต์'],a:0,e:'ก่อน 2475 ไทยปกครองแบบสมบูรณาญาสิทธิราชย์'},
+{cat:'F',q:'ประมุขของฝ่ายบริหารในระบอบประชาธิปไตยของไทยคือใคร?',o:['นายกรัฐมนตรี','ประธานรัฐสภา','ประธานศาลฎีกา','ประธานวุฒิสภา'],a:0,e:'นายกรัฐมนตรีเป็นหัวหน้าฝ่ายบริหาร'},
+{cat:'F',q:'นับตั้งแต่ พ.ศ. 2475 จนถึงปัจจุบัน ไทยมีรัฐธรรมนูญมาแล้วประมาณกี่ฉบับ?',o:['20 ฉบับ','10 ฉบับ','15 ฉบับ','5 ฉบับ'],a:0,e:'ไทยมีรัฐธรรมนูญมาแล้ว 20 ฉบับ (ฉบับ 2560 เป็นฉบับที่ 20)'},
+{cat:'F',q:'องค์กรที่ทำหน้าที่ตีความรัฐธรรมนูญและวินิจฉัยข้อขัดแย้งทางกฎหมายรัฐธรรมนูญคือองค์กรใด?',o:['ศาลรัฐธรรมนูญ','ศาลฎีกา','ศาลปกครอง','ศาลอาญา'],a:0,e:'ศาลรัฐธรรมนูญทำหน้าที่ตีความและวินิจฉัยปัญหาเกี่ยวกับรัฐธรรมนูญ'},
+{cat:'F',q:'การเลือกตั้งสมาชิกสภาผู้แทนราษฎรของไทยตามวาระปกติ จัดขึ้นทุกกี่ปี?',o:['4 ปี','2 ปี','5 ปี','6 ปี'],a:0,e:'สภาผู้แทนราษฎรมีวาระ 4 ปี จึงเลือกตั้งทุก 4 ปีตามวาระ'},
+{cat:'F',q:'หลักการที่ว่า "อำนาจอธิปไตยเป็นของปวงชนชาวไทย" ปรากฏอยู่ในเอกสารใด?',o:['รัฐธรรมนูญ','ประมวลกฎหมายอาญา','พระราชกำหนด','กฎกระทรวง'],a:0,e:'หลักอำนาจอธิปไตยเป็นของปวงชน ระบุไว้ในรัฐธรรมนูญ'},
+{cat:'F',q:'คำว่า "อธิปไตย" ในทางการเมืองหมายถึงอะไร?',o:['อำนาจสูงสุดในการปกครองประเทศ','สิทธิในการลงคะแนนเสียง','การแบ่งเขตการปกครอง','รายได้ของรัฐ'],a:0,e:'อธิปไตยคืออำนาจสูงสุดในการปกครองประเทศ'},
+{cat:'F',q:'อำนาจอธิปไตยของไทยแบ่งออกเป็น 3 ฝ่าย ได้แก่ฝ่ายใดบ้าง?',o:['นิติบัญญัติ บริหาร ตุลาการ','ทหาร ตำรวจ พลเรือน','กลาง ภูมิภาค ท้องถิ่น','รัฐ เอกชน ประชาชน'],a:0,e:'อำนาจอธิปไตยแบ่งเป็น นิติบัญญัติ บริหาร และตุลาการ'},
+{cat:'F',q:'อำนาจนิติบัญญัติเป็นของหน่วยงานใด?',o:['รัฐสภา','คณะรัฐมนตรี','ศาล','สำนักนายกรัฐมนตรี'],a:0,e:'อำนาจนิติบัญญัติ (ออกกฎหมาย) เป็นของรัฐสภา'},
+{cat:'F',q:'อำนาจตุลาการเป็นของหน่วยงานใด?',o:['ศาล','รัฐสภา','คณะรัฐมนตรี','กระทรวงยุติธรรม'],a:0,e:'อำนาจตุลาการ (พิจารณาพิพากษาคดี) เป็นของศาล'},
+{cat:'F',q:'โดยปกติผู้ลงนามรับสนองพระบรมราชโองการแต่งตั้งนายกรัฐมนตรีคือใคร?',o:['ประธานสภาผู้แทนราษฎร','ประธานศาลฎีกา','ประธานองคมนตรี','รัฐมนตรีว่าการกระทรวงมหาดไทย'],a:0,e:'ประธานสภาผู้แทนราษฎรเป็นผู้ลงนามรับสนองพระบรมราชโองการแต่งตั้งนายกรัฐมนตรี'}
+];
+
+/* ============================================================
+   BUILD QUIZZES
+   ============================================================ */
+function byCat(c){
+  var r=[];
+  for(var i=0;i<bank.length;i++){ if(bank[i].cat===c) r.push(bank[i]); }
+  return r;
+}
+function takeCat(c,n,off){
+  off=off||0;
+  return byCat(c).slice(off,off+n);
+}
+function seededShuffle(arr,seed){
+  var a=arr.slice(); var s=seed>>>0;
+  function rnd(){
+    s=(s+0x6D2B79F5)>>>0;
+    var t=Math.imul(s^(s>>>15),1|s);
+    t=(t+Math.imul(t^(t>>>7),61|t))^t;
+    return ((t^(t>>>14))>>>0)/4294967296;
+  }
+  for(var i=a.length-1;i>0;i--){
+    var j=Math.floor(rnd()*(i+1));
+    var tmp=a[i];a[i]=a[j];a[j]=tmp;
+  }
+  return a;
+}
+function cc(){ // concat helper
+  var out=[];
+  for(var i=0;i<arguments.length;i++){ out=out.concat(arguments[i]); }
+  return out;
+}
+
+var quizzes=[
+  {day:'01',type:'diag',title:'แบบทดสอบวัดระดับ',sub:'ทุกยุคปนกัน · ประเมินจุดอ่อน',time:720,
+    questions:cc(takeCat('A',3),takeCat('B',2),takeCat('C',3),takeCat('D',2),takeCat('E',3),takeCat('F',2))},
+  {day:'02',type:'std',title:'รากฐานประชาธิปไตย 2475',sub:'การเปลี่ยนแปลงการปกครอง',time:720,
+    questions:cc(takeCat('A',12),takeCat('F',3))},
+  {day:'03',type:'std',title:'ยุคเผด็จการ & 14–6 ตุลา',sub:'จอมพล + เหตุการณ์นักศึกษา',time:720,
+    questions:cc(takeCat('B',7),takeCat('C',8))},
+  {day:'04',type:'std',title:'ประชาธิปไตยครึ่งใบ – 2540',sub:'เปรม · พฤษภา 35 · รธน 40',time:720,
+    questions:cc(takeCat('D',11),takeCat('B',2,7),takeCat('F',2,3))},
+  {day:'05',type:'std',title:'การเมืองไทยยุคใหม่',sub:'ทักษิณ → ปัจจุบัน + ทบทวน',time:1200,
+    questions:cc(takeCat('E',15),takeCat('F',6),takeCat('D',4))},
+  {day:'06',type:'std',title:'ทบทวนรวมทุกยุค',sub:'Cumulative review',time:1200,
+    questions:cc(takeCat('A',5),takeCat('B',4),takeCat('C',4),takeCat('D',4),takeCat('E',5),takeCat('F',3))},
+  {day:'07',type:'big',title:'สอบจำลองใหญ่ ชุดที่ 1',sub:'Mock exam · ครอบคลุมทุกยุค',time:2100,
+    questions:seededShuffle(bank,1399).slice(0,45)},
+  {day:'08',type:'big',title:'สอบจำลองใหญ่ ชุดที่ 2',sub:'Mock exam · ครอบคลุมทุกยุค',time:2100,
+    questions:seededShuffle(bank,8742).slice(0,45)}
+];
+
+/* ============================================================
+   STATE + UI
+   ============================================================ */
+var KEYS=['ก','ข','ค','ง'];
+var ALPHA=['A','B','C','D'];
+var cur={idx:-1,quiz:null,qs:[],q:0,ans:[],timeLeft:0,timer:null,startTime:0};
+
+var $=function(id){return document.getElementById(id);};
+
+function fmtTime(sec){
+  if(sec<0)sec=0;
+  var m=Math.floor(sec/60), s=sec%60;
+  return m+':'+(s<10?'0':'')+s;
+}
+function getBest(day){
+  try{ var v=localStorage.getItem('tph_best_'+day); return v?parseInt(v,10):null; }catch(e){return null;}
+}
+function setBest(day,pct){
+  try{
+    var old=getBest(day);
+    if(old===null||pct>old) localStorage.setItem('tph_best_'+day,String(pct));
+  }catch(e){}
+}
+
+function renderHome(){
+  $('home').className='';
+  $('runner').className='hidden';
+  $('result').className='hidden';
+  if(cur.timer){clearInterval(cur.timer);cur.timer=null;}
+  window.scrollTo(0,0);
+  var html='';
+  for(var i=0;i<quizzes.length;i++){
+    var qz=quizzes[i];
+    var n=qz.questions.length;
+    var best=getBest(qz.day);
+    var cls=qz.type==='diag'?'diag':(qz.type==='big'?'big':'');
+    var mins=Math.round(qz.time/60);
+    html+=''+
+      '<div class="qcard '+cls+'">'+
+        '<div class="qnum">'+qz.day+'</div>'+
+        '<div class="qbody">'+
+          '<h3>'+qz.title+'</h3>'+
+          '<div class="meta">'+n+' ข้อ <span class="dot">•</span> '+mins+' นาที <span class="dot">•</span> '+qz.sub+'</div>'+
+          (best!==null?'<div class="best">&#9733; คะแนนสูงสุด '+best+'%</div>':'')+
+        '</div>'+
+        '<div class="go"><button class="btn" onclick="startQuiz('+i+')">เริ่ม</button></div>'+
+      '</div>';
+  }
+  $('quiz-list').innerHTML=html;
+}
+
+/* shuffle the 4 options each attempt so the answer isn't always in the same spot */
+function shuffleOpts(q){
+  var idx=[]; for(var i=0;i<q.o.length;i++) idx.push(i);
+  for(var i=idx.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1));
+    var t=idx[i];idx[i]=idx[j];idx[j]=t;
+  }
+  var newO=[],newA=0;
+  for(var k=0;k<idx.length;k++){
+    newO.push(q.o[idx[k]]);
+    if(idx[k]===q.a) newA=k;
+  }
+  return {q:q.q,o:newO,a:newA,e:q.e};
+}
+
+function startQuiz(i){
+  cur.idx=i;
+  cur.quiz=quizzes[i];
+  cur.q=0;
+  cur.ans=[];
+  cur.qs=[];
+  for(var k=0;k<cur.quiz.questions.length;k++){
+    cur.qs.push(shuffleOpts(cur.quiz.questions[k]));
+    cur.ans.push(-1);
+  }
+  cur.timeLeft=cur.quiz.time;
+  cur.startTime=Date.now();
+  $('home').className='hidden';
+  $('result').className='hidden';
+  $('runner').className='';
+  $('run-title').textContent=cur.quiz.day+' · '+cur.quiz.title;
+  window.scrollTo(0,0);
+  startTimer();
+  renderQuestion();
+}
+
+function startTimer(){
+  if(cur.timer)clearInterval(cur.timer);
+  updateTimerDisplay();
+  cur.timer=setInterval(function(){
+    cur.timeLeft--;
+    updateTimerDisplay();
+    if(cur.timeLeft<=0){
+      clearInterval(cur.timer);cur.timer=null;
+      submitQuiz(true);
+    }
+  },1000);
+}
+function updateTimerDisplay(){
+  $('timer-txt').textContent=fmtTime(cur.timeLeft);
+  if(cur.timeLeft<=60){ $('timer').className='timer warn'; }
+  else{ $('timer').className='timer'; }
+}
+
+function renderQuestion(){
+  var total=cur.qs.length, q=cur.qs[cur.q];
+  $('run-counter').textContent='ข้อที่ '+(cur.q+1)+' จาก '+total;
+  $('run-progress').style.width=(((cur.q+1)/total)*100)+'%';
+  $('run-qtext').textContent=q.q;
+
+  var oh='';
+  for(var i=0;i<q.o.length;i++){
+    var sel=cur.ans[cur.q]===i?' sel':'';
+    oh+='<div class="opt'+sel+'" onclick="pickOpt('+i+')">'+
+          '<div class="key">'+KEYS[i]+'</div>'+
+          '<div>'+q.o[i]+'</div>'+
+        '</div>';
+  }
+  $('run-opts').innerHTML=oh;
+
+  $('btn-prev').style.visibility=cur.q===0?'hidden':'visible';
+  $('btn-next').textContent=cur.q===total-1?'ข้อสุดท้ายแล้ว':'ถัดไป →';
+  $('btn-next').style.visibility=cur.q===total-1?'hidden':'visible';
+
+  renderGrid();
+}
+
+function renderGrid(){
+  var html='';
+  for(var i=0;i<cur.qs.length;i++){
+    var c='gcell';
+    if(cur.ans[i]!==-1)c+=' done';
+    if(i===cur.q)c+=' here';
+    html+='<div class="'+c+'" onclick="jumpTo('+i+')">'+(i+1)+'</div>';
+  }
+  $('run-grid').innerHTML=html;
+}
+
+function pickOpt(i){
+  cur.ans[cur.q]=i;
+  renderQuestion();
+}
+function goNext(){ if(cur.q<cur.qs.length-1){cur.q++;renderQuestion();window.scrollTo(0,0);} }
+function goPrev(){ if(cur.q>0){cur.q--;renderQuestion();window.scrollTo(0,0);} }
+function jumpTo(i){ cur.q=i;renderQuestion();window.scrollTo(0,0); }
+
+function confirmSubmit(){
+  var unanswered=0;
+  for(var i=0;i<cur.ans.length;i++){ if(cur.ans[i]===-1)unanswered++; }
+  var msg='ส่งคำตอบและดูเฉลยเลยใช่ไหม?';
+  if(unanswered>0) msg='ยังเหลืออีก '+unanswered+' ข้อที่ยังไม่ได้ตอบ\nต้องการส่งคำตอบเลยหรือไม่?';
+  if(confirm(msg)) submitQuiz(false);
+}
+
+function submitQuiz(auto){
+  if(cur.timer){clearInterval(cur.timer);cur.timer=null;}
+  var total=cur.qs.length, correct=0;
+  for(var i=0;i<total;i++){ if(cur.ans[i]===cur.qs[i].a)correct++; }
+  var pct=Math.round((correct/total)*100);
+  var used=cur.quiz.time-cur.timeLeft;
+  if(auto) used=cur.quiz.time;
+  setBest(cur.quiz.day,pct);
+
+  $('runner').className='hidden';
+  $('result').className='';
+  window.scrollTo(0,0);
+
+  $('res-score').textContent=correct+'/'+total;
+  $('res-correct').textContent=correct;
+  $('res-wrong').textContent=(total-correct);
+  $('res-pct').textContent=pct+'%';
+  $('res-time').textContent=fmtTime(used);
+
+  var label;
+  if(pct>=85)label='ยอดเยี่ยม! พร้อมลงแข่งแล้ว';
+  else if(pct>=70)label='ดีมาก ใกล้เป้าหมายแล้ว';
+  else if(pct>=50)label='พอใช้ ทบทวนจุดที่ผิดอีกนิด';
+  else label='ต้องเร่งทบทวนเนื้อหา';
+  if(auto)label='หมดเวลา! · '+label;
+  $('res-label').textContent=label;
+
+  renderReview();
+}
+
+function renderReview(){
+  var html='';
+  for(var i=0;i<cur.qs.length;i++){
+    var q=cur.qs[i];
+    var u=cur.ans[i];
+    var isOk=u===q.a;
+    html+='<div class="rev-item">';
+    html+='<div class="rev-q"><span class="qn">ข้อ '+(i+1)+'.</span>'+q.q+'</div>';
+    if(u===-1){
+      html+='<div class="rev-line you"><span class="ic">&#10007;</span><span><span class="rev-label">คุณตอบ:</span> ไม่ได้ตอบ</span></div>';
+    }else{
+      html+='<div class="rev-line you'+(isOk?' ok':'')+'"><span class="ic">'+(isOk?'&#10003;':'&#10007;')+'</span>'+
+            '<span><span class="rev-label">คุณตอบ:</span> '+KEYS[u]+'. '+q.o[u]+'</span></div>';
+    }
+    if(!isOk){
+      html+='<div class="rev-line ans"><span class="ic">&#10003;</span>'+
+            '<span><span class="rev-label">เฉลย:</span> '+KEYS[q.a]+'. '+q.o[q.a]+'</span></div>';
+    }
+    html+='<div class="rev-exp"><b>คำอธิบาย:</b> '+q.e+'</div>';
+    html+='</div>';
+  }
+  $('review-list').innerHTML=html;
+}
+
+function retryQuiz(){ startQuiz(cur.idx); }
+function quitToHome(ev){ if(ev)ev.preventDefault(); renderHome(); }
+
+/* init */
+renderHome();
+</script>
+</body>
+</html>
